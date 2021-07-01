@@ -2,9 +2,6 @@ package ding_bot
 
 import (
 	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -15,6 +12,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/jumoshen/ding_bot/utils"
 )
 
 type (
@@ -57,7 +56,7 @@ func (dc *DingConfig) genQueryParams() string {
 	params := url.Values{}
 	if dc.secret != "" {
 		timestamp := time.Now().UnixNano() / 1e6
-		sign := genSign(dc.secret, timestamp)
+		sign := utils.genSign(dc.secret, timestamp)
 		params.Add("timestamp", strconv.FormatInt(timestamp, 10))
 		params.Add("sign", sign)
 	}
@@ -128,14 +127,4 @@ func (dc *DingConfig) checkResponse(req Requester) error {
 		return fmt.Errorf("%s", respMsg)
 	}
 	return nil
-}
-
-func genSign(secret string, timestamp int64) string {
-	b := &[]byte{}
-	*b = append(*b, strconv.FormatInt(timestamp, 10)...)
-	*b = append(*b, '\n')
-	*b = append(*b, secret...)
-	h := hmac.New(sha256.New, []byte(secret))
-	h.Write(*b)
-	return base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
