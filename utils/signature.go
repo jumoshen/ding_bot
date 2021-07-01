@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func genSign(secret string, timestamp int64) string {
+func GenSign(secret string, timestamp int64) string {
 	b := &[]byte{}
 	*b = append(*b, strconv.FormatInt(timestamp, 10)...)
 	*b = append(*b, '\n')

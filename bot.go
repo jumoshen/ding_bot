@@ -56,7 +56,7 @@ func (dc *DingConfig) genQueryParams() string {
 	params := url.Values{}
 	if dc.secret != "" {
 		timestamp := time.Now().UnixNano() / 1e6
-		sign := utils.genSign(dc.secret, timestamp)
+		sign := utils.GenSign(dc.secret, timestamp)
 		params.Add("timestamp", strconv.FormatInt(timestamp, 10))
 		params.Add("sign", sign)
 	}
