@@ -18,13 +18,6 @@ import (
 )
 
 type (
-	Requester interface {
-		GetMethod() string
-		GetHeader() map[string]string
-		GetBody() ([]byte, error)
-		GetSuccessCode() int64
-	}
-
 	DingConfig struct {
 		accessToken string
 		mu          sync.Mutex
@@ -37,10 +30,11 @@ type (
 	}
 )
 
-func New(url string, options ...Param) *DingConfig {
+func New(accessToken string, options ...Param) *DingConfig {
 	dc := &DingConfig{
-		url:     url,
-		timeout: 5 * time.Second,
+		accessToken: accessToken,
+		url:         fmt.Sprintf("%s?access_token=%s", RequestUrl, accessToken),
+		timeout:     RequestTimeout,
 	}
 	for _, option := range options {
 		option(dc)

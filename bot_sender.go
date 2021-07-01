@@ -2,7 +2,7 @@ package ding_bot
 
 func (dc *DingConfig) RobotSendText(text string, options ...SendOption) error {
 	msg := Text{Content: text}
-	return dc.Request(NewSend(msg, options...))
+	return dc.Request(NewSender(msg, options...))
 }
 
 // RobotSendLink link类型的消息
@@ -13,7 +13,7 @@ func (dc *DingConfig) RobotSendLink(title, text, messageURL, picURL string, opti
 		MessageURL: messageURL,
 		PicURL:     picURL,
 	}
-	return dc.Request(NewSend(msg, options...))
+	return dc.Request(NewSender(msg, options...))
 }
 
 // RobotSendMarkdown markdown类型的消息
@@ -22,5 +22,5 @@ func (dc *DingConfig) RobotSendMarkdown(title, text string, options ...SendOptio
 		Title: title,
 		Text:  text,
 	}
-	return dc.Request(NewSend(msg, options...))
+	return dc.Request(NewSender(msg, options...))
 }

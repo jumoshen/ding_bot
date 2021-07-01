@@ -5,24 +5,25 @@ import (
 	"testing"
 )
 
-//func TestSendDing(t *testing.T) {
-//	result, err := SendDing(&DingConfig{
-//		AccessToken: "d10b71d025254605edff1bf6b5902356ba6aef5bed13b73503207e1b3c7ca42b",
-//		Secret:      "SEC4cca966f4dd317c2c56e1f65a931c8334665bce587d84f3e41144d877d030437",
-//	}, "haha")
-//
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//
-//	log.Println(string(result))
-//	log.Println(time.Now().Unix())
-//}
+func BenchmarkNew(b *testing.B) {
+	accessToken := "xxxx"
+	secret := "xxxx"
+	dt := New(accessToken, WithSecret(secret))
+
+	textContent := "我就是我, 是不一样的烟火"
+	//atMobiles := SendWithAtMobiles([]string{"15210123291"})
+	for i := 0; i < 19; i++ {
+		if err := dt.RobotSendText(textContent); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+}
 
 func TestNew(t *testing.T) {
-	webHook := "https://oapi.dingtalk.com/robot/send?access_token=d10b71d025254605edff1bf6b5902356ba6aef5bed13b73503207e1b3c7ca42b"
-	secret := "SEC4cca966f4dd317c2c56e1f65a931c8334665bce587d84f3e41144d877d030437"
-	dt := New(webHook, WithSecret(secret))
+	accessToken := "xxxx"
+	secret := "xxxx"
+	dt := New(accessToken, WithSecret(secret))
 
 	// text类型
 	textContent := "我就是我, 是不一样的烟火"

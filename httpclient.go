@@ -7,6 +7,13 @@ import (
 )
 
 type (
+	Requester interface {
+		GetMethod() string
+		GetHeader() map[string]string
+		GetBody() ([]byte, error)
+		GetSuccessCode() int64
+	}
+
 	HttpClient struct {
 		client *http.Client
 		Url    string

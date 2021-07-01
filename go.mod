@@ -1,3 +1,3 @@
-module github.com/jumoshen/ding.bot
+module github.com/jumoshen/ding_bot
 
 go 1.16

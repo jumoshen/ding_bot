@@ -7,6 +7,11 @@ type (
 		at      *At
 		message DingMessage
 	}
+
+	At struct {
+		AtMobiles []string `json:"atMobiles,omitempty"`
+		IsAtAll   bool     `json:"isAtAll,omitempty"`
+	}
 )
 
 func (r *Sender) GetMethod() string {
@@ -38,15 +43,10 @@ func (r *Sender) GetSuccessCode() int64 {
 	return 0
 }
 
-func NewSend(message DingMessage, options ...SendOption) *Sender {
+func NewSender(message DingMessage, options ...SendOption) *Sender {
 	r := &Sender{message: message}
 	for _, option := range options {
 		option(r)
 	}
 	return r
-}
-
-type At struct {
-	AtMobiles []string `json:"atMobiles,omitempty"`
-	IsAtAll   bool     `json:"isAtAll,omitempty"`
 }

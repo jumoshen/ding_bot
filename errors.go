@@ -22,7 +22,7 @@ func init() {
 }
 
 func (dc *DingConfig) newError(code ErrCode, params ...interface{}) error {
-	errorMessage := "未知错误"
+	errorMessage := DefaultError
 	ok := false
 
 	if errorMessage, ok = e[code]; ok && errorMessage != "" {
