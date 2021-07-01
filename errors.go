@@ -23,7 +23,9 @@ func init() {
 
 func (dc *DingConfig) newError(code ErrCode, params ...interface{}) error {
 	errorMessage := "未知错误"
-	if errorMessage, ok := e[code]; ok && errorMessage != "" {
+	ok := false
+
+	if errorMessage, ok = e[code]; ok && errorMessage != "" {
 		errorMessage = fmt.Sprintf(errorMessage, params...)
 	}
 	return errors.New(errorMessage)
