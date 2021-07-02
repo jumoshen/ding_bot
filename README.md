@@ -3,7 +3,7 @@
 Send message to dingding`s group chat by golang
 
 ### install
-- get go get github.com/jumoshen/ding.bot@v0.0.2
+- go get github.com/jumoshen/ding.bot@v0.0.5
 - or use `go get -u` to update this package
 
 ### example
