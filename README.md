@@ -1,5 +1,7 @@
 # ding_bot
 
+[![Build Status](https://travis-ci.com/jumoshen/ding_bot.svg?branch=master)](https://travis-ci.com/jumoshen/ding_bot)
+
 Send message to dingding`s group chat by golang
 
 ### install
