@@ -12,7 +12,7 @@ func BenchmarkNew(b *testing.B) {
 
 	textContent := "我就是我, 是不一样的烟火"
 	//atMobiles := SendWithAtMobiles([]string{"15210123291"})
-	for i := 0; i < 19; i++ {
+	for i := 0; i < b.N; i++ {
 		if err := dt.RobotSendText(textContent); err != nil {
 			log.Fatal(err)
 		}
