@@ -15,7 +15,6 @@ import (
 	"time"
 
 	"github.com/jumoshen/ding_bot/client"
-	"github.com/jumoshen/ding_bot/param"
 	"github.com/jumoshen/ding_bot/utils"
 )
 
@@ -32,11 +31,11 @@ type (
 	}
 )
 
-func New(accessToken string, options ...param.Param) *DingConfig {
+func New(accessToken string, options ...Param) *DingConfig {
 	dc := &DingConfig{
 		accessToken: accessToken,
-		url:         fmt.Sprintf("%s?access_token=%s", param.RequestUrl, accessToken),
-		timeout:     param.RequestTimeout,
+		url:         fmt.Sprintf("%s?access_token=%s", RequestUrl, accessToken),
+		timeout:     RequestTimeout,
 	}
 	for _, option := range options {
 		option(dc)
@@ -78,14 +77,14 @@ func (dc *DingConfig) Request(req client.Requester) error {
 	dc.mu.Lock()
 	defer dc.mu.Unlock()
 	if err := dc.checkURL(); err != nil {
-		return param.NewError(param.ErrorCheckUrl, err)
+		return NewError(ErrorCheckUrl, err)
 	}
 	body, err := dc.doRequest(req)
 	if err != nil {
-		return param.NewError(param.ErrorDoRequest, err, body)
+		return NewError(ErrorDoRequest, err, body)
 	}
 	if err := dc.checkResponse(req); err != nil {
-		return param.NewError(param.ErrorResponse, err, body)
+		return NewError(ErrorResponse, err, body)
 	}
 	return nil
 }

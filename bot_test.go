@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jumoshen/ding_bot/param"
 	"github.com/jumoshen/ding_bot/utils"
 )
 
@@ -19,7 +18,7 @@ func BenchmarkGenSign(b *testing.B) {
 func TestNew(t *testing.T) {
 	accessToken := "xxxx"
 	secret := "xxxx"
-	_ = New(accessToken, param.WithSecret(secret))
+	_ = New(accessToken, WithSecret(secret))
 
 	// text类型
 	//textContent := "我就是我, 是不一样的烟火"

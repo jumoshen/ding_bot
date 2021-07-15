@@ -1,4 +1,4 @@
-package param
+package ding_bot
 
 import (
 	"errors"
