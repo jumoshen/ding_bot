@@ -1,4 +1,4 @@
-package ding_bot
+package sender
 
 type SendOption func(*Sender)
 

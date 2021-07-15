@@ -1,8 +1,10 @@
-package ding_bot
+package param
 
 import (
 	"errors"
 	"fmt"
+
+	"github.com/jumoshen/ding_bot"
 )
 
 type ErrCode int
@@ -21,7 +23,7 @@ func init() {
 	e[ErrorResponse] = "response err:%s, body:%s"
 }
 
-func (dc *DingConfig) newError(code ErrCode, params ...interface{}) error {
+func (dc *ding_bot.DingConfig) NewError(code ErrCode, params ...interface{}) error {
 	errorMessage := DefaultError
 	ok := false
 

@@ -1,11 +1,15 @@
-package ding_bot
+package sender
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"github.com/jumoshen/ding_bot/param"
+)
 
 type (
 	Sender struct {
 		at      *At
-		message DingMessage
+		message param.DingMessage
 	}
 
 	At struct {
@@ -43,7 +47,7 @@ func (r *Sender) GetSuccessCode() int64 {
 	return 0
 }
 
-func NewSender(message DingMessage, options ...SendOption) *Sender {
+func NewSender(message param.DingMessage, options ...SendOption) *Sender {
 	r := &Sender{message: message}
 	for _, option := range options {
 		option(r)

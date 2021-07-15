@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -13,6 +14,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jumoshen/ding_bot/client"
+	"github.com/jumoshen/ding_bot/param"
 	"github.com/jumoshen/ding_bot/utils"
 )
 
@@ -23,17 +26,17 @@ type (
 		url         string
 		secret      string
 		timeout     time.Duration
-		client      *HttpClient
+		client      *client.HttpClient
 		response    *http.Response
 		err         error
 	}
 )
 
-func New(accessToken string, options ...Param) *DingConfig {
+func New(accessToken string, options ...param.Param) *DingConfig {
 	dc := &DingConfig{
 		accessToken: accessToken,
-		url:         fmt.Sprintf("%s?access_token=%s", RequestUrl, accessToken),
-		timeout:     RequestTimeout,
+		url:         fmt.Sprintf("%s?access_token=%s", param.RequestUrl, accessToken),
+		timeout:     param.RequestTimeout,
 	}
 	for _, option := range options {
 		option(dc)
@@ -49,7 +52,7 @@ func (dc *DingConfig) initClient() {
 	}
 	params := dc.genQueryParams()
 	dc.url = strings.Join([]string{dc.url, params}, step)
-	dc.client = NewHttpClient(dc.url, dc.timeout)
+	dc.client = client.NewHttpClient(dc.url, dc.timeout)
 }
 
 func (dc *DingConfig) genQueryParams() string {
@@ -71,23 +74,23 @@ func (dc *DingConfig) checkURL() error {
 	return nil
 }
 
-func (dc *DingConfig) Request(req Requester) error {
+func (dc *DingConfig) Request(req client.Requester) error {
 	dc.mu.Lock()
 	defer dc.mu.Unlock()
 	if err := dc.checkURL(); err != nil {
-		return dc.newError(ErrorCheckUrl, err)
+		return dc.NewError(param.ErrorCheckUrl, err)
 	}
 	body, err := dc.doRequest(req)
 	if err != nil {
-		return dc.newError(ErrorDoRequest, err, body)
+		return dc.NewError(param.ErrorDoRequest, err, body)
 	}
 	if err := dc.checkResponse(req); err != nil {
-		return dc.newError(ErrorResponse, err, body)
+		return dc.NewError(param.ErrorResponse, err, body)
 	}
 	return nil
 }
 
-func (dc *DingConfig) doRequest(req Requester) (string, error) {
+func (dc *DingConfig) doRequest(req client.Requester) (string, error) {
 	method := req.GetMethod()
 	header := req.GetHeader()
 	body, err := req.GetBody()
@@ -105,8 +108,12 @@ func (dc *DingConfig) doRequest(req Requester) (string, error) {
 	return string(body), nil
 }
 
-func (dc *DingConfig) checkResponse(req Requester) error {
-	defer dc.response.Body.Close()
+func (dc *DingConfig) checkResponse(req client.Requester) error {
+	var err error
+	defer func(Body io.ReadCloser) {
+		err = Body.Close()
+	}(dc.response.Body)
+
 	data, err := ioutil.ReadAll(dc.response.Body)
 	if err != nil {
 		return err
@@ -114,10 +121,10 @@ func (dc *DingConfig) checkResponse(req Requester) error {
 	dc.response.Body = ioutil.NopCloser(bytes.NewReader(data))
 
 	if dc.response.StatusCode != http.StatusOK {
-		return fmt.Errorf("invalid http status %d, body: %s", dc.response.StatusCode, data)
+		return fmt.Errorf("invalid client status %d, body: %s", dc.response.StatusCode, data)
 	}
 
-	respMsg := ResponseMsg{}
+	respMsg := client.ResponseMsg{}
 	if err := json.Unmarshal(data, &respMsg); err != nil {
 		return fmt.Errorf("body: %s, %w", data, err)
 	}

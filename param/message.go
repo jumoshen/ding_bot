@@ -1,4 +1,4 @@
-package ding_bot
+package param
 
 const (
 	MessageText messageType = iota

@@ -1,4 +1,4 @@
-package ding_bot
+package client
 
 import (
 	"bytes"

@@ -1,7 +1,9 @@
-package ding_bot
+package param
 
 import (
 	"time"
+
+	"github.com/jumoshen/ding_bot"
 )
 
 var (
@@ -11,11 +13,11 @@ var (
 )
 
 type (
-	Param func(config *DingConfig)
+	Param func(config *ding_bot.DingConfig)
 )
 
 func WithSecret(secret string) Param {
-	return func(dt *DingConfig) {
+	return func(dt *ding_bot.DingConfig) {
 		dt.secret = secret
 	}
 }

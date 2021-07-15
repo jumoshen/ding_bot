@@ -1,4 +1,8 @@
-package ding_bot
+package sender
+
+import (
+	"github.com/jumoshen/ding_bot/param"
+)
 
 // Text text类型
 type Text struct {
@@ -7,7 +11,7 @@ type Text struct {
 }
 
 func (Text) GetType() string {
-	return MessageText.String()
+	return param.MessageText.String()
 }
 
 // Link link类型
@@ -26,7 +30,7 @@ type Link struct {
 }
 
 func (Link) GetType() string {
-	return MessageLink.String()
+	return param.MessageLink.String()
 }
 
 // Markdown markdown类型
@@ -39,7 +43,7 @@ type Markdown struct {
 }
 
 func (Markdown) GetType() string {
-	return MessageMarkdown.String()
+	return param.MessageMarkdown.String()
 }
 
 // Btn 按钮的信息
@@ -76,7 +80,7 @@ type ActionCard struct {
 }
 
 func (ActionCard) GetType() string {
-	return MessageActionCard.String()
+	return param.MessageActionCard.String()
 }
 
 type FeedCardLink struct {
@@ -96,5 +100,5 @@ type FeedCard struct {
 }
 
 func (FeedCard) GetType() string {
-	return MessageFeedCard.String()
+	return param.MessageFeedCard.String()
 }
