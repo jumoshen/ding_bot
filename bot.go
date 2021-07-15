@@ -78,14 +78,14 @@ func (dc *DingConfig) Request(req client.Requester) error {
 	dc.mu.Lock()
 	defer dc.mu.Unlock()
 	if err := dc.checkURL(); err != nil {
-		return dc.NewError(param.ErrorCheckUrl, err)
+		return param.NewError(param.ErrorCheckUrl, err)
 	}
 	body, err := dc.doRequest(req)
 	if err != nil {
-		return dc.NewError(param.ErrorDoRequest, err, body)
+		return param.NewError(param.ErrorDoRequest, err, body)
 	}
 	if err := dc.checkResponse(req); err != nil {
-		return dc.NewError(param.ErrorResponse, err, body)
+		return param.NewError(param.ErrorResponse, err, body)
 	}
 	return nil
 }
