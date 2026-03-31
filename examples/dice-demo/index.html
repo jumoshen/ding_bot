@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice Motion Demo</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="stage-card">
+        <div class="stage" aria-label="3D dice stage">
+          <div class="shadow" id="dice-shadow"></div>
+          <div class="dice-wrap" id="dice-wrap">
+            <div class="dice" id="dice" aria-live="polite">
+              <div class="face front">
+                <span class="pip p5"></span>
+              </div>
+              <div class="face back">
+                <span class="pip p1"></span>
+                <span class="pip p3"></span>
+                <span class="pip p4"></span>
+                <span class="pip p6"></span>
+                <span class="pip p7"></span>
+                <span class="pip p9"></span>
+              </div>
+              <div class="face right">
+                <span class="pip p1"></span>
+                <span class="pip p5"></span>
+                <span class="pip p9"></span>
+              </div>
+              <div class="face left">
+                <span class="pip p1"></span>
+                <span class="pip p3"></span>
+                <span class="pip p7"></span>
+                <span class="pip p9"></span>
+              </div>
+              <div class="face top">
+                <span class="pip p1"></span>
+                <span class="pip p3"></span>
+                <span class="pip p5"></span>
+                <span class="pip p7"></span>
+                <span class="pip p9"></span>
+              </div>
+              <div class="face bottom">
+                <span class="pip p1"></span>
+                <span class="pip p9"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="control-card">
+        <h1>Dice Motion Demo</h1>
+        <p class="subline">可控停面 + 多段转动 + 落地回弹</p>
+
+        <div class="control-row">
+          <label for="target">目标点数</label>
+          <select id="target">
+            <option value="random" selected>随机</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <label for="speed">转速系数</label>
+          <div class="speed-wrap">
+            <input id="speed" type="range" min="0.8" max="1.3" step="0.05" value="1.0" />
+            <span id="speed-value">1.00x</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="roll-btn">掷骰子</button>
+          <span class="result">结果：<strong id="result">-</strong></span>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
